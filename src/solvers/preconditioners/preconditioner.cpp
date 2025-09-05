@@ -267,8 +267,7 @@ namespace rocalution
         log_debug(this, "GS::MoveToHostLocalData_()", this->build_);
 
         this->GS_.MoveToHost();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->GS_, LAnalyse, false);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -277,8 +276,7 @@ namespace rocalution
         log_debug(this, "GS::MoveToAcceleratorLocalData_()", this->build_);
 
         this->GS_.MoveToAccelerator();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->GS_, LAnalyse, false);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
