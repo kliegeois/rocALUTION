@@ -386,8 +386,8 @@ namespace rocalution
         log_debug(this, "SGS::MoveToHostLocalData_()", this->build_);
 
         this->SGS_.MoveToHost();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, LAnalyse, false);
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, UAnalyse, false);
 
         this->diag_entries_.MoveToHost();
         this->v_.MoveToHost();
@@ -399,8 +399,8 @@ namespace rocalution
         log_debug(this, "SGS::MoveToAcceleratorLocalData_()", this->build_);
 
         this->SGS_.MoveToAccelerator();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, LAnalyse, false);
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, UAnalyse, false);
 
         this->diag_entries_.MoveToAccelerator();
         this->v_.MoveToAccelerator();
@@ -487,8 +487,7 @@ namespace rocalution
         log_debug(this, "ILU::MoveToHostLocalData_()", this->build_);
 
         this->ILU_.MoveToHost();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->ILU_, LUAnalyse);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -497,8 +496,7 @@ namespace rocalution
         log_debug(this, "ILU::MoveToAcceleratorLocalData_()", this->build_);
 
         this->ILU_.MoveToAccelerator();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->ILU_, LUAnalyse);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -696,8 +694,7 @@ namespace rocalution
         log_debug(this, "ItILU0::MoveToHostLocalData_()", this->build_);
 
         this->ItILU0_.MoveToHost();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->ItILU0_, LUAnalyse);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -706,8 +703,7 @@ namespace rocalution
         log_debug(this, "ItILU0::MoveToAcceleratorLocalData_()", this->build_);
 
         this->ItILU0_.MoveToAccelerator();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->ItILU0_, LUAnalyse);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
