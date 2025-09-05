@@ -76,6 +76,9 @@ namespace rocalution
     template <typename P, typename F, typename... Ts>
     void log_debug(P ptr, F fct, Ts&... xs)
     {
+        std::cout << "Obj addr: " << ptr << "; ";
+        std::cout << "fct: " << fct << std::endl;
+
         if(_get_backend_descriptor()->log_file != NULL)
         {
             // LCOV_EXCL_START
