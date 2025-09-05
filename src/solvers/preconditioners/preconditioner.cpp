@@ -267,16 +267,7 @@ namespace rocalution
         log_debug(this, "GS::MoveToHostLocalData_()", this->build_);
 
         this->GS_.MoveToHost();
-        this->build_ = false;
-        if(!this->build_)
-        {
-            log_debug(this, "GS::MoveToHostLocalData_(): Build called", this->build_);
-            this->Build();
-        }
-        else
-        {
-            log_debug(this, "GS::MoveToHostLocalData_(): Build not called", this->build_);
-        }
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->GS_, LAnalyse, false);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -285,16 +276,7 @@ namespace rocalution
         log_debug(this, "GS::MoveToAcceleratorLocalData_()", this->build_);
 
         this->GS_.MoveToAccelerator();
-        this->build_ = false;
-        if(!this->build_)
-        {
-            log_debug(this, "GS::MoveToAcceleratorLocalData_(): Build called", this->build_);
-            this->Build();
-        }
-        else
-        {
-            log_debug(this, "GS::MoveToAcceleratorLocalData_(): Build not called", this->build_);
-        }
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->GS_, LAnalyse, false);
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -404,8 +386,8 @@ namespace rocalution
         log_debug(this, "SGS::MoveToHostLocalData_()", this->build_);
 
         this->SGS_.MoveToHost();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, LAnalyse, false);
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, UAnalyse, false);
 
         this->diag_entries_.MoveToHost();
         this->v_.MoveToHost();
@@ -417,8 +399,8 @@ namespace rocalution
         log_debug(this, "SGS::MoveToAcceleratorLocalData_()", this->build_);
 
         this->SGS_.MoveToAccelerator();
-        if(!this->build_)
-            this->Build();
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, LAnalyse, false);
+        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, UAnalyse, false);
 
         this->diag_entries_.MoveToAccelerator();
         this->v_.MoveToAccelerator();
