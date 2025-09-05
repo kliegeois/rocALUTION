@@ -268,7 +268,14 @@ namespace rocalution
 
         this->GS_.MoveToHost();
         if(!this->build_)
+        {
+            log_debug(this, "GS::MoveToHostLocalData_(): Build called", this->build_);
             this->Build();
+        }
+        else
+        {
+            log_debug(this, "GS::MoveToHostLocalData_(): Build not called", this->build_);
+        }
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
@@ -278,7 +285,14 @@ namespace rocalution
 
         this->GS_.MoveToAccelerator();
         if(!this->build_)
+        {
+            log_debug(this, "GS::MoveToAcceleratorLocalData_(): Build called", this->build_);
             this->Build();
+        }
+        else
+        {
+            log_debug(this, "GS::MoveToAcceleratorLocalData_(): Build not called", this->build_);
+        }
     }
 
     template <class OperatorType, class VectorType, typename ValueType>
