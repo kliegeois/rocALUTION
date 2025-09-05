@@ -2781,6 +2781,8 @@ namespace rocalution
     bool HIPAcceleratorMatrixCSR<ValueType>::LSolve(const BaseVector<ValueType>& in,
                                                     BaseVector<ValueType>*       out) const
     {
+        printf("LSolve is called\n");
+
         if(this->nnz_ > 0)
         {
             assert(out != NULL);
@@ -2805,6 +2807,20 @@ namespace rocalution
             ValueType alpha = static_cast<ValueType>(1);
 
             assert(this->nnz_ <= std::numeric_limits<int>::max());
+
+            printf("before rocsparseTcsrsv\n");
+
+            // Print debug info for rocsparseTcsrsv inputs
+            printf("rocsparseTcsrsv inputs:\n");
+            printf("nrow_ = %d, nnz_ = %d\n", this->nrow_, this->nnz_);
+            printf("L_mat_descr_ = %p\n", (void*)this->L_mat_descr_);
+            printf("mat_.val = %p\n", (void*)this->mat_.val);
+            printf("mat_.row_offset = %p\n", (void*)this->mat_.row_offset);
+            printf("mat_.col = %p\n", (void*)this->mat_.col);
+            printf("mat_info_ = %p\n", (void*)this->mat_info_);
+            printf("cast_in->vec_ = %p\n", (void*)cast_in->vec_);
+            printf("cast_out->vec_ = %p\n", (void*)cast_out->vec_);
+            printf("mat_buffer_ = %p\n", (void*)this->mat_buffer_);
 
             // Solve L
             status = rocsparseTcsrsv(ROCSPARSE_HANDLE(this->local_backend_.ROC_sparse_handle),
