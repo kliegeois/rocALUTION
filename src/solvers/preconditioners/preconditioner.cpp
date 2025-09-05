@@ -386,8 +386,8 @@ namespace rocalution
         log_debug(this, "SGS::MoveToHostLocalData_()", this->build_);
 
         this->SGS_.MoveToHost();
-        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, LAnalyse, false);
-        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, UAnalyse, false);
+        if(!this->build_)
+            this->Build();
 
         this->diag_entries_.MoveToHost();
         this->v_.MoveToHost();
@@ -399,8 +399,8 @@ namespace rocalution
         log_debug(this, "SGS::MoveToAcceleratorLocalData_()", this->build_);
 
         this->SGS_.MoveToAccelerator();
-        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, LAnalyse, false);
-        DISPATCH_OPERATOR_ANALYSE_STRATEGY(this->solver_descr_, this->SGS_, UAnalyse, false);
+        if(!this->build_)
+            this->Build();
 
         this->diag_entries_.MoveToAccelerator();
         this->v_.MoveToAccelerator();
